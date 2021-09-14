@@ -14,8 +14,6 @@ export const Home = () => {
         getData();
     }, []);
 
-    console.log(movies);
-
     return (
         <div className='home'>
             <UpcomingMovies movies={movies}/>

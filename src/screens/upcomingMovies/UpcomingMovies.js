@@ -11,8 +11,6 @@ export const UpcomingMovies = ({movies}) => {
         }
     });
 
-    console.log(upcomingMovies);
-
     return (
         <div className='um-root'>
             <header className='um-header'>

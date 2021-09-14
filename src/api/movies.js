@@ -16,3 +16,18 @@ export const getMovies = async ({path}) => {
         throw e;
     }
 }
+
+export const getMoviesByFilter = async ({path, params}) => {
+    try {
+        const response = await axios.get(`${baseUrl}${path}?${params}`);
+        const paginationParams = new URLSearchParams({
+            limit: response.data.total_count,
+            page: 1
+        });
+        const {data: {movies}} = await axios.get(`${baseUrl}${path}?${params}&${paginationParams}`)
+        return movies;
+    } catch(e) {
+        console.log(e);
+        throw e;
+    }
+}
