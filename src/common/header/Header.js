@@ -5,13 +5,32 @@ import { Button } from "@material-ui/core";
 import Modal from '../modal/Modal';
 import Register from "../../screens/register/Register";
 import Login from "../../screens/login/Login";
+import {login} from "../../api/auth";
 
 export const Header = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(!!sessionStorage.accessToken);
     const [showModal, setShowModal] = useState(false);
 
     const onLoginClick = () => {
-        setLoggedIn(!loggedIn);
+        loggedIn ? onLogout() : setShowModal(true);
+    }
+
+    const onLogin = async (userName, password) => {
+        const response = await login({path: 'auth/login', accessToken: `Basic ${window.btoa(`${userName}:${password}`)}`})
+        if(response && response.statusText === 'OK') {
+            sessionStorage.setItem('uuid', response.data.id);
+            sessionStorage.setItem('access-token', response.headers.accessToken);
+            setLoggedIn(true);
+            setShowModal(false);
+        } else {
+            throw(response);
+        }
+    }
+
+    const onLogout = async () => {
+        sessionStorage.removeItem('uuid');
+        sessionStorage.removeItem('access-token');
+        setLoggedIn(false);
     }
 
     const onBookShowClick = () => {
@@ -37,8 +56,8 @@ export const Header = () => {
                 close={closeModal}
                 tabs={['Login', 'Register']}
                 tabActions={{
-                    Login: <Login />,
-                    Register: <Register />
+                    Login: <Login onLogin={onLogin}/>,
+                    Register: <Register/>
                 }}
             />
             }
@@ -49,8 +68,6 @@ export const Header = () => {
 export default Header;
 
 /* --------------------- TODO ---------------------
-Access token for - 'loggedIn' state
-
 BOOK SHOW button -
 1. This button should always be displayed in the header when a user clicks on a released movie, whether they are logged in or not.
 2. When a user is not logged in, clicking the Book Show button would open the modal that would ask them to log in/register on the application.

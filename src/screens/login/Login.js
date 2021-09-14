@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import './Login.css';
 import {FormControl, FormHelperText, InputLabel, Input, Button} from "@material-ui/core";
 
-export const Login = () => {
+export const Login = (props) => {
     const [userName, setUserName] = useState('')
     const [reqUsername, setReqUserName] = useState('no-helper')
     const [password, setPassword] = useState('')
     const [reqPassword, setReqPassword] = useState('no-helper')
+    const [message, setMessage] = useState('');
 
     const onUserNameChange = (e) => {
         setUserName(e.target.value);
@@ -16,10 +17,14 @@ export const Login = () => {
         setPassword(e.target.value);
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         userName === '' ? setReqUserName("helper") : setReqUserName('no-helper');
         password === '' ? setReqPassword("helper") : setReqPassword('no-helper');
-        console.log('Should implement Login Submit!!')
+        try {
+            await props.onLogin(userName, password);
+        } catch(err) {
+            setMessage(err.message);
+        }
     }
 
     return (
@@ -56,11 +61,12 @@ export const Login = () => {
                     </FormHelperText>
                 </FormControl>
             </div>
+            {setMessage && <div className='message'>{message}</div>}
             <Button
                 variant="contained"
                 onClick={onSubmit}
                 color="primary"
-                className='submit'
+                className={setMessage ? 'message' : 'submit'}
             >
                 LOGIN
             </Button>
