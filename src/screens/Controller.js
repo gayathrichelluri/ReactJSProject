@@ -12,25 +12,24 @@ const Controller = () => {
     return (
         <Router>
             <div className="main-container">
-                <Header>
-                    <Route
-                        exact
-                        path="/"
-                        render={(props) => <Home {...props} baseUrl={baseUrl} />}
-                    />
-                    <Route
-                        path="/movie/:id"
-                        render={(props) => <Details {...props} baseUrl={baseUrl} />}
-                    />
-                    <Route
-                        path="/bookshow/:id"
-                        render={(props) => <BookShow {...props} baseUrl={baseUrl} />}
-                    />
-                    <Route
-                        path="/confirm/:id"
-                        render={(props) => <Confirmation {...props} baseUrl={baseUrl} />}
-                    />
-                </Header>
+                <Header />
+                <Route
+                    exact
+                    path="/"
+                    render={(props) => <Home {...props} baseUrl={baseUrl} />}
+                />
+                <Route
+                    path="/movie/:id"
+                    render={(props) => <Details {...props} baseUrl={baseUrl} />}
+                />
+                <Route
+                    path="/bookshow/:id"
+                    render={(props) => <BookShow {...props} baseUrl={baseUrl} />}
+                />
+                <Route
+                    path="/confirm/:id"
+                    render={(props) => <Confirmation {...props} baseUrl={baseUrl} />}
+                />
             </div>
         </Router>
     );

@@ -22,6 +22,7 @@ export const Modal = ({open, close, tabs, tabActions}) => {
 
     return (
         <ReactModal
+            ariaHideApp={false}
             isOpen={open}
             onRequestClose={close}
             shouldCloseOnOverlayClick={true}
