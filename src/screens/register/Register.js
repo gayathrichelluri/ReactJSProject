@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './Register.css';
 import {Button, FormControl, FormHelperText, Input, InputLabel} from "@material-ui/core";
+import {signup} from "../../api/auth";
 
 export const Register = () => {
     const [firstName, setFirstName] = useState('')
@@ -13,6 +14,7 @@ export const Register = () => {
     const [reqPassword, setReqPassword] = useState('no-helper')
     const [contact, setContact] = useState('')
     const [reqContact, setReqContact] = useState('no-helper')
+    const [message, setMessage] = useState('');
 
     const onFirstNameChange = (e) => {
         setFirstName(e.target.value);
@@ -34,13 +36,30 @@ export const Register = () => {
         setContact(e.target.value);
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         firstName === '' ? setReqFirstName("helper") : setReqFirstName('no-helper');
         lastName === '' ? setReqLastName("helper") : setReqLastName('no-helper');
         email === '' ? setReqEmail("helper") : setReqEmail('no-helper');
         password === '' ? setReqPassword("helper") : setReqPassword('no-helper');
         contact === '' ? setReqContact("helper") : setReqContact('no-helper');
-        console.log('Should implement Register Submit!!')
+
+        if(firstName === '' || lastName === '' || email === '' || password === '' || contact === '')
+            return;
+
+        const data = {
+            "email_address": email,
+            "first_name": firstName,
+            "last_name": lastName,
+            "mobile_number": contact,
+            "password": password
+        }
+
+        try {
+            await signup({path: 'signup', data});
+            setMessage('Registration Successful. Please Login!');
+        } catch(err) {
+            setMessage(err.message);
+        }
     }
 
     return (
@@ -123,11 +142,12 @@ export const Register = () => {
                     </FormHelperText>
                 </FormControl>
             </div>
+            {setMessage && <div className='message'>{message}</div>}
             <Button
                 variant="contained"
                 onClick={onSubmit}
                 color="primary"
-                className='submit'
+                className={setMessage ? 'message' : 'submit'}
             >
                 REGISTER
             </Button>

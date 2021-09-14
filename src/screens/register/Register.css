@@ -30,3 +30,7 @@
 .red {
     color: red;
 }
+
+.message {
+    margin-top: 40px !important;
+}
