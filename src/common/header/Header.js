@@ -3,8 +3,8 @@ import './Header.css';
 import logoSVG from '../../assets/logo.svg';
 import { Button } from "@material-ui/core";
 import Modal from '../modal/Modal';
-import Register from "../../screens/register/Register";
-import Login from "../../screens/login/Login";
+import Register from "../../components/register/Register";
+import Login from "../../components/login/Login";
 import {login} from "../../api/auth";
 
 export const Header = () => {

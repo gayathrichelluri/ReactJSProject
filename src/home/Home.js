@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './Home.css';
-import UpcomingMovies from "../upcomingMovies/UpcomingMovies";
-import ReleasedMovies from "../releaseMovies/ReleasedMovies";
-import {getMovies} from "../../api/movies";
+import UpcomingMovies from "../components/upcomingMovies/UpcomingMovies";
+import ReleasedMovies from "../components/releaseMovies/ReleasedMovies";
+import {getMovies} from "../api/movies";
 
 export const Home = () => {
     const [movies, setMovies] = useState([]);
