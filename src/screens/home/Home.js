@@ -4,7 +4,7 @@ import UpcomingMovies from "../../components/upcomingMovies/UpcomingMovies";
 import ReleasedMovies from "../../components/releaseMovies/ReleasedMovies";
 import {getMovies} from "../../api/movies";
 
-export const Home = () => {
+export const Home = (props) => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export const Home = () => {
     return (
         <div className='home'>
             <UpcomingMovies movies={movies}/>
-            <ReleasedMovies movies={movies}/>
+            <ReleasedMovies movies={movies} onReleasedMovieClick={props.onReleasedMovieClick}/>
         </div>
     );
 }
