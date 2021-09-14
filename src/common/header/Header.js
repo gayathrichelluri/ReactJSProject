@@ -6,8 +6,10 @@ import Modal from '../modal/Modal';
 import Register from "../../components/register/Register";
 import Login from "../../components/login/Login";
 import {login} from "../../api/auth";
+import {Link, useHistory} from "react-router-dom";
 
-export const Header = () => {
+export const Header = (props) => {
+    const history = useHistory();
     const [loggedIn, setLoggedIn] = useState(!!sessionStorage.accessToken);
     const [showModal, setShowModal] = useState(false);
 
@@ -15,13 +17,14 @@ export const Header = () => {
         loggedIn ? onLogout() : setShowModal(true);
     }
 
-    const onLogin = async (userName, password) => {
+    const onLogin = async (userName, password, bookShowId) => {
         const response = await login({path: 'auth/login', accessToken: `Basic ${window.btoa(`${userName}:${password}`)}`})
         if(response && response.statusText === 'OK') {
             sessionStorage.setItem('uuid', response.data.id);
             sessionStorage.setItem('access-token', response.headers.accessToken);
             setLoggedIn(true);
             setShowModal(false);
+            props.showBookButton && history.push(`/bookshow/${props.bookShowId}`);
         } else {
             throw(response);
         }
@@ -31,10 +34,11 @@ export const Header = () => {
         sessionStorage.removeItem('uuid');
         sessionStorage.removeItem('access-token');
         setLoggedIn(false);
+        props.showBookButton && history.push(`/`);
     }
 
     const onBookShowClick = () => {
-        !loggedIn ? setShowModal(!showModal) : console.log('Should show Book Show screen');
+        !loggedIn ? setShowModal(!showModal) : history.push(`/bookshow/${props.bookShowId}`);
     }
 
     const closeModal = () => {
@@ -46,7 +50,7 @@ export const Header = () => {
             <div className='header'>
                 <img className='logo' src={logoSVG} alt="React Logo" />
                 <div className='buttons'>
-                    <Button className='button' variant='contained' color='primary' onClick={onBookShowClick}>BOOK SHOW</Button>
+                    {props.showBookButton && <Button className='button' variant='contained' color='primary' onClick={onBookShowClick}>BOOK SHOW</Button>}
                     <Button className='button' variant='contained' onClick={onLoginClick}>{loggedIn ? 'LOGOUT' : 'LOGIN'}</Button>
                 </div>
             </div>
@@ -66,12 +70,3 @@ export const Header = () => {
 }
 
 export default Header;
-
-/* --------------------- TODO ---------------------
-BOOK SHOW button -
-1. This button should always be displayed in the header when a user clicks on a released movie, whether they are logged in or not.
-2. When a user is not logged in, clicking the Book Show button would open the modal that would ask them to log in/register on the application.
-If the user is logged in, then it would open the Book Show page, which you can find in the ‘bookshow’ folder,
-which is present in the ‘screens’ folder. (The code for BookShow is already provided to you.
-You just need to integrate that with the Book Show button.)
-*/

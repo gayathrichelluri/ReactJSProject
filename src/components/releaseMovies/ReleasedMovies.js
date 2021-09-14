@@ -31,7 +31,7 @@ const styles = (theme) => ({
     }
 });
 
-export const ReleasedMovies = ({movies}) => {
+export const ReleasedMovies = ({movies, onReleasedMovieClick}) => {
     const classes = withStyles(styles);
 
     const [filteredMovies, setFilteredMovies] = useState([]);
@@ -74,6 +74,7 @@ export const ReleasedMovies = ({movies}) => {
     }
 
     const onMovieClick = (id) => {
+        onReleasedMovieClick(id);
         console.log('Movie ID - should redirect to details page', id);
     }
 
