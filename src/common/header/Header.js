@@ -12,6 +12,7 @@ export const Header = (props) => {
     const history = useHistory();
     const [loggedIn, setLoggedIn] = useState(!!sessionStorage.accessToken);
     const [showModal, setShowModal] = useState(false);
+    const [isBookShowClick, setIsBookShowClick] = useState(false);
 
     const onLoginClick = () => {
         loggedIn ? onLogout() : setShowModal(true);
@@ -24,7 +25,7 @@ export const Header = (props) => {
             sessionStorage.setItem('access-token', response.headers.accessToken);
             setLoggedIn(true);
             setShowModal(false);
-            props.showBookButton && history.push(`/bookshow/${props.bookShowId}`);
+            props.showBookButton && isBookShowClick && history.push(`/bookshow/${props.bookShowId}`);
         } else {
             throw(response);
         }
@@ -38,7 +39,12 @@ export const Header = (props) => {
     }
 
     const onBookShowClick = () => {
-        !loggedIn ? setShowModal(!showModal) : history.push(`/bookshow/${props.bookShowId}`);
+        if(loggedIn)
+            history.push(`/bookshow/${props.bookShowId}`);
+        else {
+            setShowModal(!showModal);
+            setIsBookShowClick(true);
+        }
     }
 
     const closeModal = () => {

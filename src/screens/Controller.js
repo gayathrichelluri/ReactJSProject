@@ -28,7 +28,7 @@ const Controller = () => {
                     />
                     <Route
                         path="/movie/:id"
-                        render={(props) => <Details {...props} baseUrl={baseUrl} changeBookShowId={changeBookShowId}/>}
+                        render={(props) => <Details {...props} baseUrl={baseUrl} changeBookShowId={changeBookShowId} showBookButton={showBookShowButton}/>}
                     />
                     <Route
                         path="/bookshow/:id"
