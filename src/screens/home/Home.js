@@ -12,12 +12,13 @@ export const Home = (props) => {
             setMovies(await getMovies({path: 'movies'}));
         }
         getData();
+        props.changeBookShowId('');
     }, []);
 
     return (
         <div className='home'>
             <UpcomingMovies movies={movies}/>
-            <ReleasedMovies movies={movies} onReleasedMovieClick={props.onReleasedMovieClick}/>
+            <ReleasedMovies movies={movies} changeBookShowId={props.changeBookShowId}/>
         </div>
     );
 }
