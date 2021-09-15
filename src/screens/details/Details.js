@@ -18,11 +18,10 @@ export const Details = (props) => {
             setMovie(await getMovieById({path: `movies/${id}`}));
         }
         getData();
-        props.changeBookShowId(id)
+        !props.showBookButton && props.changeBookShowId(id)
     }, [])
 
     const onStarClick = (id) => {
-        console.log(id);
         if(stars.length > 0) {
             const rating = stars.map((s, idx) => {
                 return idx <= id ? 'yellow' : 'black';

@@ -76,8 +76,8 @@ export const ReleasedMovies = ({movies, changeBookShowId}) => {
     }
 
     const onMovieClick = (id) => {
-        history.push({pathname: `movie/${id}`, state: {id: {id}}});
         changeBookShowId(id);
+        history.push({pathname: `movie/${id}`, state: {id: {id}}});
     }
 
     const onGenreChange = (e) => {
