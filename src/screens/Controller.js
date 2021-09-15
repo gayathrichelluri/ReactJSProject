@@ -10,10 +10,10 @@ const Controller = () => {
     const baseUrl = "/api/v1/";
 
     const [showBookShowButton, setShowBookShowButton] = useState(false)
-    const [bookShowId, setBookShowId] = useState(false)
-    const onReleasedMovieClick = (id) => {
+    const [bookShowId, setBookShowId] = useState('')
+    const changeBookShowId = (id) => {
         setBookShowId(id);
-        setShowBookShowButton(true)
+        id === '' ? setShowBookShowButton(false) : setShowBookShowButton(!showBookShowButton);
     }
 
     return (
@@ -24,11 +24,11 @@ const Controller = () => {
                     <Route
                         exact
                         path="/"
-                        render={(props) => <Home {...props} baseUrl={baseUrl} onReleasedMovieClick={onReleasedMovieClick} />}
+                        render={(props) => <Home {...props} baseUrl={baseUrl} changeBookShowId={changeBookShowId} />}
                     />
                     <Route
                         path="/movie/:id"
-                        render={(props) => <Details {...props} baseUrl={baseUrl} />}
+                        render={(props) => <Details {...props} baseUrl={baseUrl} changeBookShowId={changeBookShowId}/>}
                     />
                     <Route
                         path="/bookshow/:id"

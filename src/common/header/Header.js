@@ -6,7 +6,7 @@ import Modal from '../modal/Modal';
 import Register from "../../components/register/Register";
 import Login from "../../components/login/Login";
 import {login} from "../../api/auth";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 export const Header = (props) => {
     const history = useHistory();

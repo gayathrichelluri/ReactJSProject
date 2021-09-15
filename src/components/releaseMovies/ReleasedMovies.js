@@ -19,6 +19,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {getGenres} from "../../api/genres";
 import {getArtists} from "../../api/artists";
 import {getMoviesByFilter} from "../../api/movies";
+import {useHistory} from "react-router-dom";
 
 // Note: This isn't working!! Did as part of the assignment
 const styles = (theme) => ({
@@ -31,8 +32,9 @@ const styles = (theme) => ({
     }
 });
 
-export const ReleasedMovies = ({movies, onReleasedMovieClick}) => {
+export const ReleasedMovies = ({movies, changeBookShowId}) => {
     const classes = withStyles(styles);
+    const history = useHistory();
 
     const [filteredMovies, setFilteredMovies] = useState([]);
     const releasedMovies = (filteredMovies.length > 0 ? filteredMovies : movies)
@@ -74,8 +76,8 @@ export const ReleasedMovies = ({movies, onReleasedMovieClick}) => {
     }
 
     const onMovieClick = (id) => {
-        onReleasedMovieClick(id);
-        console.log('Movie ID - should redirect to details page', id);
+        history.push({pathname: `movie/${id}`, state: {id: {id}}});
+        changeBookShowId(id);
     }
 
     const onGenreChange = (e) => {

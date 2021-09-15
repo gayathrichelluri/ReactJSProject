@@ -17,6 +17,16 @@ export const getMovies = async ({path}) => {
     }
 }
 
+export const getMovieById = async({path}) => {
+    try {
+        const {data} =  await axios.get(`${baseUrl}${path}`);
+        return data;
+    } catch(e) {
+        console.log(e);
+        throw e;
+    }
+}
+
 export const getMoviesByFilter = async ({path, params}) => {
     try {
         const response = await axios.get(`${baseUrl}${path}?${params}`);
